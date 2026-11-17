@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Club Member Manager</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css">
+    <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle, #5c3a21 0%, #221307 70%, #0d0703 100%);
+            font-family: 'Segoe UI', sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 500px;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #26354d;
+            font-size: 27px;
+            font-weight: 700;
+        }
+
+        .club-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d5dce5;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #4169e1;
+            box-shadow: 0 0 5px rgba(65, 105, 225, 0.3);
+        }
+
+        button {
+            padding: 14px;
+            background: #4169e1;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #3155c5;
+            transform: translateY(-2px);
+        }
+
+        #output {
+            background: #f5f7fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e1e6ef;
+            text-align: left;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        #output h3 {
+            color: #26354d;
+            margin-bottom: 10px;
+        }
+
+        #output p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        #output strong {
+            color: #26354d;
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                padding: 22px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Student Club Member Manager</h2>
+
+        <img src="Logo.jpg" alt="Club Image" class="club-image">
+
+        <p class="subtitle">Manage your student club members</p>
+
+        <input type="text" id="first-name" placeholder="First Name">
+        <input type="text" id="last-name" placeholder="Last Name">
+
+        <button py-click="add_member">Add Member</button>
+
+        <div id="output"></div>
+
+    </div>
+
+    <script type="py">
+        from pyscript import document
+
+        grade_7 = {"Zild Benitez", "Badjao Castro"}
+        grade_8 = {"Nataliya Batumbakal", "Mark Santos Loriz Magante Herrington"}
+        grade_9 = {"Blaster Silonga", "Unique Salonga"}
+        grade_10 = {"John Doe", "Jason Duval"}
+
+        new_members = set()
+
+        def update_display():
+            master_set = grade_7 | grade_8 | grade_9 | grade_10 | new_members
+
+            document.querySelector("#output").innerHTML = f"""
+                <h3>All Club Members:</h3>
+                <p>{', '.join(sorted(master_set))}</p>
+                <p><strong>Total Members:</strong> {len(master_set)}</p>
+            """
+
+        def add_member(event):
+            first = document.querySelector("#first-name").value.strip()
+            last = document.querySelector("#last-name").value.strip()
+
+            if first and last:
+                entry = f"{first} {last}"
+                new_members.add(entry)
+
+                document.querySelector("#first-name").value = ""
+                document.querySelector("#last-name").value = ""
+
+                update_display()
+
+        update_display()
+    </script>
+
+</body>
+</html>
